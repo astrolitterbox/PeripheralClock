@@ -1,6 +1,6 @@
 # Persistence of vision LED wall clock
 
-Based on Science Hack Day Vilnius 2018 participant badge code by _miceuz_ (https://github.com/Technariumas/shd18badge) and Adafruit bitmapfont.py library.
+Based on Science Hack Day Vilnius 2018 participant badge code by _miceuz_ (https://github.com/Technariumas/shd18badge) and Adafruit bitmapfont library for MicroPython: https://github.com/adafruit/micropython-adafruit-bitmap-font/.
 
 ## Prerequisites
 
@@ -16,7 +16,7 @@ To program WEMOS D1, you will need the following:
 Use dmesg to determine the USB port ([usb]) the badge is connected to, e.g. /dev/ttyUSB0.
 
 Flash the firmware:
-cd shd18badge/micropython
+cd PeripheralClock/micropython
 
 Edit the flash_microcontroller.sh file so that it points to the correct USB port. If esptool.py is needed, install it (for example, pip install esptool.py). Then copy the files to the microcontroller:
 
