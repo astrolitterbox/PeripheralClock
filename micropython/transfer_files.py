@@ -46,7 +46,6 @@ class EspSerial(serial.Serial):
         assert len(chunk) <= CHUNK_SIZE, 'Chunk is too big!'
         return '...' not in self.command("w('%s')" % binascii.b2a_base64(chunk))
 
-
 #class EspWebSocket(websocket.WebSocket, MyEsp):
 #    DEFAULT_DELAY = 0
 #
