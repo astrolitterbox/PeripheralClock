@@ -6,7 +6,8 @@ from time import sleep
 import urandom
 import util 
 import ustruct
-
+import utime
+import ntptime as np
 leds = 8
 width = 15
 
@@ -14,10 +15,19 @@ pixel = NeoPixel(Pin(14, Pin.OUT), leds) #D5
 dimFactor = 4
 num = "32"
 color = urandom.getrandbits(8)
+[r, g, b] = util.colorWheel(color)
+
 font_name='font5x8.bin'
 fontFile = open(font_name, 'rb')
 font_width, font_height = (5, 8)
+
+np.settime()
+secondCounter = utime.localtime()[5]
+
  
+def draw_text(text):
+	for ch in text:
+		draw_char(ch)
 
 def draw_char(ch):
        # Go through each column of the character.
@@ -33,11 +43,10 @@ def draw_char_line(ch, pos):
             for y_pos in range(font_height):
                 # Draw a pixel for each bit that's flipped on.
                 if (line >> y_pos) & 0x1:
-					pixel[y_pos] = [0, 32, 64]
+					pixel[y_pos] = [64, 16, 0]
             pixel.write()
-            sleep(0.005)
+            sleep(0.03)
             setPixels(0, 0, 0)
-
 
   
 def setPixels(r, g, b):
@@ -46,7 +55,12 @@ def setPixels(r, g, b):
 	pixel.write() 
 
 while True:
-	[r, g, b] = util.colorWheel(color)
+	if (utime.localtime()[5] - secondCounter) > 21600:
+		settime()
+	hours = utime.localtime()[3]
+	minutes = utime.localtime()[4]
+	timeString = str(hours) + str(minutes)
+	draw_text(timeString)
 	#setPixels(r%dimFactor, g%dimFactor, b%dimFactor)
 	#sleep(0.04)
 	#draw_char("X")
